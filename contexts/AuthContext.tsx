@@ -1,5 +1,7 @@
 import { createContext, useState } from "react";
+import { setCookie } from 'nookies'
 import Router from 'next/router'
+
 import { api } from "../services/api";
 
 interface SignInCredentials {
@@ -33,7 +35,17 @@ export const AuthProvider: React.FC = ({ children }): JSX.Element => {
         password
       })
 
-      const { permissions, roles } = response.data
+      const { token, refreshToken, permissions, roles } = response.data
+
+      setCookie(undefined, 'nextauth.token', token, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/'
+      })
+
+      setCookie(undefined, 'nextauth.refreshToken', refreshToken, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/'
+      })
 
       setUser({
         email,
