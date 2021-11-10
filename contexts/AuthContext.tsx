@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { api } from "../services/api";
 
 interface SignInCredentials {
   email: string
@@ -16,7 +17,16 @@ export const AuthProvider: React.FC = ({ children }): JSX.Element => {
   const isAuthenticated = false
 
   async function signIn({ email, password }: SignInCredentials) {
-    console.log({ email, password })
+    try {
+      const response = await api.post('sessions', {
+        email,
+        password
+      })
+
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
