@@ -35,7 +35,6 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
 
   console.log(response)
 
-
   return {
     props: {}
   }

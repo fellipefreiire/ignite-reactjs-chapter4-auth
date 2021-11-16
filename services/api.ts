@@ -45,7 +45,7 @@ export function setupApiClient(ctx = undefined) {
                 path: '/'
               })
 
-              api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+              // api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
               failedRequestsQueue.forEach(request => request.onSuccess(token))
               failedRequestsQueue = []
@@ -56,6 +56,8 @@ export function setupApiClient(ctx = undefined) {
 
               if (process.browser) {
                 signOut()
+              } else {
+                return Promise.reject(new AuthTokenError())
               }
             })
             .finally(() => {
@@ -78,8 +80,6 @@ export function setupApiClient(ctx = undefined) {
       } else {
         if (process.browser) {
           signOut()
-        } else {
-          return Promise.reject(new AuthTokenError())
         }
       }
     }
