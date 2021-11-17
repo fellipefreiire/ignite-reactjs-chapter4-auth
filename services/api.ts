@@ -45,7 +45,7 @@ export function setupApiClient(ctx = undefined) {
                 path: '/'
               })
 
-              // api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+              api.defaults.headers['Authorization'] = `Bearer ${token}`
 
               failedRequestsQueue.forEach(request => request.onSuccess(token))
               failedRequestsQueue = []
